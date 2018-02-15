@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CatalogDAL.Models;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
@@ -26,6 +28,8 @@ namespace CatalogAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDirectoryBrowser();
+            services.AddOptions();
             services.AddMvc();
             services.AddSingleton<CatalogROContext>(
                 new CatalogROContext());
@@ -88,8 +92,28 @@ namespace CatalogAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
+            
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
             app.UseMvc();
+
+            //app.UseDirectoryBrowser(new DirectoryBrowserOptions
+            //{
+            //    FileProvider = new PhysicalFileProvider(
+            //        Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),
+            //    RequestPath = "/"
+            //});
+
+            //app.Use(async (context, next) =>
+            //{
+
+            //    // Do work that doesn't write to the Response.
+            //    await next.Invoke();
+            //    // Do logging or other work that doesn't write to the Response.
+            //});
+
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
