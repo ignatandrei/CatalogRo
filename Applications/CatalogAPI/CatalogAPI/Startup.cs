@@ -29,7 +29,7 @@ namespace CatalogAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDirectoryBrowser();
-            services.AddOptions();
+            //services.AddOptions();
             services.AddMvc();
             services.AddSingleton<CatalogROContext>(
                 new CatalogROContext());
@@ -94,9 +94,16 @@ namespace CatalogAPI
             }
             
             
-            app.UseDefaultFiles();
+            //app.UseDefaultFiles();
             app.UseStaticFiles();
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
+
 
             //app.UseDirectoryBrowser(new DirectoryBrowserOptions
             //{
