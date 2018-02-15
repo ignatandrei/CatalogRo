@@ -125,7 +125,7 @@ namespace CatalogAPI
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Is This Taxi Legal API");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Catalog RO");
 
             });
         }
