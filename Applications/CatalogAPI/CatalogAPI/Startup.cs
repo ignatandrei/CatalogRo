@@ -96,6 +96,7 @@ namespace CatalogAPI
             
             app.UseDefaultFiles();
             app.UseStaticFiles();
+            app.UseMvc();
             //app.UseMvc(routes =>
             //{
 
