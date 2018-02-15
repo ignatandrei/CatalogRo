@@ -286,3 +286,5 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+/Applications/CatalogAPI/CatalogAPI/_PublishedWebsites/NetCoreWebApp
+/Applications/CatalogAPI/CatalogAPI/CatalogAPI.csproj.bak
