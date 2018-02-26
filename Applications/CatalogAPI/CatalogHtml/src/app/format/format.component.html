@@ -1,7 +1,12 @@
  
-<td>{{format.idformat}}</td>    
-  <td>
-      <input [(ngModel)]="format.nume" placeholder="nume" />
-  </td>
+<td>
+  <div [ngStyle]="currentStyles">
+    {{format.idformat}}
+  </div>
+  </td>    
+<td>
+  <input [(ngModel)]="format.nume" placeholder="nume" [disabled]="format.isDeleted" [readonly]="format.isDeleted" />
+  <span [hidden]="!isModified">(de salvat)</span>
+</td>
 
 

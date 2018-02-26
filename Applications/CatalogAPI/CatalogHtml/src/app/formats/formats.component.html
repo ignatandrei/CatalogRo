@@ -1,7 +1,13 @@
 <h2>Formats</h2>
 
 <table>
-  <tr *ngFor="let f of formats">   
+  <tr *ngFor="let f of formats">
     <app-format [format]="f"></app-format>
+    <button (click)="delete(f,true)" [hidden]="f.isDeleted">Delete</button>
+    <button (click)="delete(f,false)" [hidden]="!f.isDeleted">Un-Delete</button>
   </tr>
 </table>
+<button (click)="addNew()" >Add new</button>
+<button (click)="save()" [disabled]="!haveChanges()" >save</button>
+
+

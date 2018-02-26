@@ -13,113 +13,96 @@ namespace CatalogAPI.Controllers
     [Route("api/Formats")]
     public class FormatsController : Controller
     {
-        private readonly CatalogROContext _context;
+        
 
-        public FormatsController(CatalogROContext context)
+        public FormatsController()
         {
-            _context = context;
+            
         }
 
         // GET: api/Formats
         [HttpGet]
-        public IEnumerable<Format> GetFormat()
+        public IEnumerable<Format> GetFormat([FromServices]CatalogROContext context)
         {
-            return _context.Format;
+            return context.Format;
         }
 
         // GET: api/Formats/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetFormat([FromRoute] int id)
+        public async Task<IActionResult> GetFormat([FromServices]CatalogROContext context,[FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var format = await _context.Format.SingleOrDefaultAsync(m => m.Idformat == id);
+            var format = await context.Format.SingleOrDefaultAsync(m => m.Idformat == id);
 
             if (format == null)
             {
-                return NotFound();
+                return NotFound($"cannot found format with id :{id}");
             }
 
             return Ok(format);
         }
 
         // PUT: api/Formats/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutFormat([FromRoute] int id, [FromBody] Format format)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != format.Idformat)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(format).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FormatExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
+        
         // POST: api/Formats
         [HttpPost]
-        public async Task<IActionResult> PostFormat([FromBody] Format format)
+        public async Task<IActionResult> PostFormat([FromServices]CatalogROContext context,[FromBody] Format[] formats)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            if(formats?.Length == 0)
+            {
+                return Ok("no data sent - no data saved");
+            }
+            var arrID = formats.Where(it => it.Idformat != 0).Select(it => it.Idformat).ToArray();
+            var formatNew = await context.Format.Where(m => arrID.Contains(m.Idformat)).ToArrayAsync();
 
-            _context.Format.Add(format);
-            await _context.SaveChangesAsync();
+            foreach(var item in formatNew)
+            {
+                var existing = formats.First(it => it.Idformat == item.Idformat);
+                item.EnglishName = existing.EnglishName;
+                item.Nume = existing.Nume;
+            }
+            var newItems = formats.Where(it => it.Idformat == 0).ToArray();
+            if (newItems.Length > 0)
+                context.Format.AddRange(newItems);
+                
+            
+            await context.SaveChangesAsync();
 
-            return CreatedAtAction("GetFormat", new { id = format.Idformat }, format);
+            return CreatedAtAction("GetFormat", formats);
         }
 
         // DELETE: api/Formats/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteFormat([FromRoute] int id)
+        public async Task<IActionResult> DeleteFormat([FromServices]CatalogROContext context,[FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var format = await _context.Format.SingleOrDefaultAsync(m => m.Idformat == id);
+            var format = await context.Format.SingleOrDefaultAsync(m => m.Idformat == id);
             if (format == null)
             {
-                return NotFound();
+                return NotFound($"not found format with id {id}");
             }
 
-            _context.Format.Remove(format);
-            await _context.SaveChangesAsync();
+            context.Format.Remove(format);
+            await context.SaveChangesAsync();
 
             return Ok(format);
         }
 
-        private bool FormatExists(int id)
+        private bool FormatExists(CatalogROContext context,int id)
         {
-            return _context.Format.Any(e => e.Idformat == id);
+            return context.Format.Any(e => e.Idformat == id);
         }
     }
 }

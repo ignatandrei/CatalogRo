@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
+import { BrowserModule } from '@angular/platform-browser'
 import { FormatsComponent } from './formats/formats.component';
 
 const routes: Routes = [
@@ -8,7 +8,8 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [    
+  imports: [
+    BrowserModule,
     RouterModule.forRoot(routes)
   ],
   exports: [RouterModule],
