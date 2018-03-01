@@ -9,6 +9,9 @@ import { FormatService } from './format.service';
 
 import { AppRoutingModule } from './/app-routing.module';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
+import {MatMenuModule,MatCardModule, MatToolbarModule, MatInputModule, MatButtonModule, MatSelectModule, MatIconModule } from '@angular/material';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +22,15 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
     BrowserModule,
     FormsModule,
     AppRoutingModule,    
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatInputModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatIconModule,
+    MatMenuModule,
+    MatCardModule
   ],
   providers: [
     FormatService,

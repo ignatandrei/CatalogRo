@@ -5,18 +5,25 @@
   </h1>
   
 </div>
-
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
   
-    <h2><a target="_blank" rel="noopener" href="/swagger/">Goto API/Swagger</a></h2>
-  </li>  
-</ul>
-<nav>
-  <a routerlink="/admin/formats">Formats</a>
-  <a href="/admin/formats">Formats</a>
-</nav>
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <span>CatalogRO</span>
+
+      <span class="example-spacer"></span>
+      <span class="example-spacer"></span>
+      <button mat-button [matMenuTriggerFor]="menu">Admin</button>
+      <mat-menu #menu="matMenu">
+
+        <a mat-menu-item routerLink="/admin/formats" color="primary">Formats</a>
+        <a mat-menu-item routerLink="/admin/formats" color="primary">Categories</a>
+      </mat-menu>
+      <span class="example-spacer"></span>
+      <a mat-raised-button href="/swagger/">Goto API/Swagger</a>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  
+
 
 <router-outlet></router-outlet>
 
