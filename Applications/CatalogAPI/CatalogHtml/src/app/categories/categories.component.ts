@@ -11,11 +11,13 @@ import 'rxjs/Rx'
   styleUrls: ['./categories.component.css']
 })
 export class CategoriesComponent implements OnInit {
-
+  loading: boolean;
   lists: CategoryView[];
-  initialList: CategoryView[] = [];
+  initialList: Category[] ;
   constructor(private service: CategoryService) { }
   getList(): void {
+
+    this.loading = true;
     
     this.service.getList()
       .map(function (a, b) {
@@ -29,11 +31,14 @@ export class CategoriesComponent implements OnInit {
       })
       .subscribe(it => {
         this.lists = it;
-        this.lists.forEach(item => {
-          item.Categories = it;
-          this.initialList.push(item);
+        this.initialList = [];
+        this.lists.forEach(item => {          
+          this.initialList.push(item.owned);
         });
-        
+        this.lists.forEach(item => {          
+          item.Categories = this.initialList;
+        });
+        this.loading = false;
       });
 
   }
@@ -50,13 +55,10 @@ export class CategoriesComponent implements OnInit {
     var saved = this.service.save(toSave.filter(it => !it.isDeleted));
     var deleted = this.service.delete(toSave.filter(it => it.isDeleted));
     console.log('save2');
-
-    Observable
-      .merge([saved, deleted])
-      .switchMap((e) => { return e })
+    saved.concat(deleted)
       .subscribe(() => this.getList());
 
-
+    console.log('save3');
   }
   haveChanges(): boolean {
     if ((this.lists || []).length < 1)
@@ -66,8 +68,7 @@ export class CategoriesComponent implements OnInit {
   }
   addNew(): void {
     var c = new CategoryView(new Category(0, "", 0));
-    c.Categories = this.initialList;
-    window.alert('a'+c.Categories.length);
+    c.Categories = this.initialList;    
     this.lists.push(c);
   }
   delete(f: CategoryView, op: boolean) {

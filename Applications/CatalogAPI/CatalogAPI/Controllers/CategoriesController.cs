@@ -53,53 +53,40 @@ namespace CatalogAPI.Controllers
         }
 
         // PUT: api/Categories/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCategorie([FromRoute] int id, [FromBody] Categorie categorie)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != categorie.Idcategorie)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(categorie).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CategorieExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
+       
 
         // POST: api/Categories
         [HttpPost]
-        public async Task<IActionResult> PostCategorie([FromBody] Categorie categorie)
+        public async Task<IActionResult> PostCategorie([FromServices]CatalogROContext context, [FromBody] Categorie[] categories)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Categorie.Add(categorie);
-            await _context.SaveChangesAsync();
-            DestroyObjectsRelationship(categorie);
-            return CreatedAtAction("GetCategorie", new { id = categorie.Idcategorie }, categorie);
+            if (categories?.Length == 0)
+            {
+                return Ok("no data sent - no data saved");
+            }
+            var arrID = categories.Where(it => it.Idcategorie!= 0).Select(it => it.Idcategorie).ToArray();
+            var formatNew = await context.Categorie.Where(m => arrID.Contains(m.Idcategorie)).ToArrayAsync();
+
+            foreach (var item in formatNew)
+            {
+                var existing = categories.First(it => it.Idcategorie == item.Idcategorie);
+                item.EnglishName = existing.EnglishName;
+                item.Nume = existing.Nume;
+                item.Parent = existing.Parent;
+            }
+            var newItems = categories.Where(it => it.Idcategorie == 0).ToArray();
+            if (newItems.Length > 0)
+                context.Categorie.AddRange(newItems);
+
+
+            await context.SaveChangesAsync();
+            categories.ToList().ForEach(DestroyObjectsRelationship);
+            return CreatedAtAction("POSTCategorie", categories);
+
         }
 
         // DELETE: api/Categories/5

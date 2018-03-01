@@ -13,7 +13,9 @@ export class CategoryView extends Category
     this.isModified = false;
     this.isNew = false;
     this.isDeleted = false;
+    this.owned = c;
   }
+  owned: Category;
   isModified: boolean;
   isNew: boolean;
   isDeleted: boolean;

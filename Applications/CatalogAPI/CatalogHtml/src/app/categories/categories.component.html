@@ -1,5 +1,8 @@
 <h2>Categories</h2>
-<table>
+<div [hidden]="!loading">
+  loading data. Please wait
+</div>
+<table [hidden]="loading">
   <tr *ngFor="let l of lists">
 
     <td>

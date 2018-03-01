@@ -31,8 +31,8 @@ namespace CatalogAPI
             services.AddDirectoryBrowser();
             //services.AddOptions();
             services.AddMvc();
-            services.AddSingleton<CatalogROContext>(
-                new CatalogROContext());
+            services.AddScoped<CatalogROContext>();
+                
             //services.AddDbContext<CatalogROContext>(options 
             //    => options.UseInMemoryDatabase(databaseName: "Add_writes_to_database")
             //    );

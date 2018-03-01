@@ -18,7 +18,7 @@ export class CategoryService {
   save(data: Category[]): Observable<Category[]> {
     if ((data || []).length == 0)
       return Observable.of([]);
-
+    
     return this.http.post<Category[]>(this.formatsUrl, data);
   }
   delete(data: Category[]): Observable<Category[]> {
