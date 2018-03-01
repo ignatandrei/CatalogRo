@@ -10,7 +10,7 @@ using CatalogDAL.Models;
 namespace CatalogAPI.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Categories")]
+    [Route("api/[controller]")]
     public class CategoriesController : Controller
     {
         private readonly CatalogROContext _context;

@@ -10,7 +10,7 @@ using CatalogDAL.Models;
 namespace CatalogAPI.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Formats")]
+    [Route("api/[controller]")]
     public class FormatsController : Controller
     {
         
