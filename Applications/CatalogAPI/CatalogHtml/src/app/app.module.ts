@@ -6,6 +6,9 @@ import { AppComponent } from './app.component';
 import { FormatsComponent } from './formats/formats.component';
 import { FormatComponent } from './format/format.component';
 import { FormatService } from './format.service';
+import { CategoryComponent } from './category/category.component';
+import { CategoriesComponent } from './categories/categories.component';
+import { CategoryService } from './category.service';
 
 import { AppRoutingModule } from './/app-routing.module';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
@@ -16,7 +19,9 @@ import {MatMenuModule,MatCardModule, MatToolbarModule, MatInputModule, MatButton
   declarations: [
     AppComponent,
     FormatsComponent,
-    FormatComponent
+    FormatComponent,
+    CategoryComponent,
+    CategoriesComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +39,7 @@ import {MatMenuModule,MatCardModule, MatToolbarModule, MatInputModule, MatButton
   ],
   providers: [
     FormatService,
+    CategoryService,
     AppRoutingModule
   ],
   bootstrap: [AppComponent]

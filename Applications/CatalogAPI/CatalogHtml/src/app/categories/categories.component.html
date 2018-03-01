@@ -1,0 +1,17 @@
+<h2>Categories</h2>
+<table>
+  <tr *ngFor="let l of lists">
+
+    <td>
+      <app-category [itemToDisplay]="l"></app-category>
+      <button mat-button color="primary" (click)="delete(l,true)" [hidden]="l.isDeleted" [disabled]="l.isDeleted">Delete</button>
+      <button mat-button color="primary" (click)="delete(l,false)" [hidden]="!l.isDeleted" [disabled]="!l.isDeleted">Un-Delete</button>
+    </td>
+  </tr>
+</table>
+<mat-toolbar color="secondary">
+  <mat-toolbar-row>
+    <a mat-button (click)="addNew()" color="primary">Add new</a>
+    <a mat-button (click)="save()" color="primary" [disabled]="!haveChanges()">save</a>
+  </mat-toolbar-row>
+</mat-toolbar>
