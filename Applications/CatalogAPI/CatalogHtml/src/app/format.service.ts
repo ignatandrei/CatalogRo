@@ -38,13 +38,10 @@ export class FormatService {
 
   }
   getFormats(): Observable<Format[]> {
-
-    return this.http.get<Format[]>(this.formatsUrl)
-      //.pipe(
-      //      tap(f =>
-      //            f.forEach(it => it.isModified = false)
-      //          ))
-          ;
+    
+    return this.http.get<Format[]>(this.formatsUrl);
+    
+          
   }
 
 }

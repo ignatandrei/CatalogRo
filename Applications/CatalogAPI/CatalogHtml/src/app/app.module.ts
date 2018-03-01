@@ -1,4 +1,4 @@
-
+import { NoCacheInterceptor } from './nocacheInterceptor';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule,ReactiveFormsModule } from "@angular/forms";
@@ -16,6 +16,7 @@ import { CategoryService } from './category.service';
 import { AppRoutingModule } from './/app-routing.module';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import {
   MatAutocompleteModule,
   MatButtonModule,
@@ -102,7 +103,9 @@ import {
   providers: [
     FormatService,
     CategoryService,
-    AppRoutingModule
+    AppRoutingModule,
+    { provide: HTTP_INTERCEPTORS, useClass: NoCacheInterceptor, multi: true }
+
   ],
   bootstrap: [AppComponent]
 })

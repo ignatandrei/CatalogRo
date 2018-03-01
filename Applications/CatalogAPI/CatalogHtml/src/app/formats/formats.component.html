@@ -1,11 +1,13 @@
 <h2>Formats</h2>
-<table>
+<div [hidden]="!loading">
+  loading data. Please wait
+</div>
+<table [hidden]="loading">
   <tr *ngFor="let f of formats">
     <td>
       <app-format [format]="f"></app-format>
       <button mat-button color="primary" (click)="delete(f,true)" [hidden]="f.isDeleted" [disabled]="f.isDeleted">Delete</button>
       <button mat-button color="primary" (click)="delete(f,false)" [hidden]="!f.isDeleted" [disabled]="!f.isDeleted">Un-Delete</button>
-
     </td>
   </tr>
 </table>

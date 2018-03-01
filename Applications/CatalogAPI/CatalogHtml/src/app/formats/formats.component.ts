@@ -11,9 +11,11 @@ import 'rxjs/Rx'
 })
 export class FormatsComponent implements OnInit {
 
+  loading: boolean;
   formats: FormatView[];
   constructor(private formatService: FormatService) { }
   getFormats(): void {
+	  this.loading=true;
     this.formatService.getFormats()
       .map(function (a, b) {
         return a.map(it => {
@@ -24,7 +26,10 @@ export class FormatsComponent implements OnInit {
         }
           )
       })
-    .subscribe(it => this.formats = it);
+    .subscribe(it => {
+		    this.formats = it;
+        this.loading = false;
+	  });
       
   }
   ngOnInit() {
