@@ -51,6 +51,8 @@ import {
   MatToolbarModule,
   MatTooltipModule,
 } from '@angular/material';
+import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
+import { AdminComponent } from './admin/admin.component';
 
 
 @NgModule({
@@ -59,7 +61,9 @@ import {
     FormatsComponent,
     FormatComponent,
     CategoryComponent,
-    CategoriesComponent
+    CategoriesComponent,
+    BreadcrumbsComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

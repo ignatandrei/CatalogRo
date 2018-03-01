@@ -3,30 +3,30 @@
   <h1>
     Welcome to {{ title }}!
   </h1>
-  
+
 </div>
-  
-  <mat-toolbar color="primary">
-    <mat-toolbar-row>
-      <a mat-button routerLink="/">
-        <mat-icon>home</mat-icon>
+
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <a mat-button routerLink="/">
+      <mat-icon>home</mat-icon>
       CatalogRO
-      </a>
-      
-      <span class="example-spacer"></span>
-      <span class="example-spacer"></span>
-      <button mat-button [matMenuTriggerFor]="menu">Admin</button>
-      <mat-menu #menu="matMenu">
+    </a>
 
-        <a mat-menu-item routerLink="/admin/formats" color="primary">Formats</a>
-        <a mat-menu-item routerLink="/admin/categories" color="primary">Categories</a>
-      </mat-menu>
-      <span class="example-spacer"></span>
-      <a mat-button href="/swagger/">Goto API/Swagger</a>
-    </mat-toolbar-row>
-  </mat-toolbar>
-  
+    <span class="example-spacer"></span>
+    <span class="example-spacer"></span>
+    <button mat-button [matMenuTriggerFor]="menu">Admin</button>
+    <mat-menu #menu="matMenu">
 
+      <a mat-menu-item routerLink="/admin/formats" color="primary">Formats</a>
+      <a mat-menu-item routerLink="/admin/categories" color="primary">Categories</a>
+    </mat-menu>
+    <span class="example-spacer"></span>
+    <a mat-button href="/swagger/">Goto API/Swagger</a>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<app-breadcrumbs></app-breadcrumbs>
 
 <router-outlet></router-outlet>
 
