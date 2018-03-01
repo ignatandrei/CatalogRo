@@ -9,6 +9,12 @@ namespace CatalogAPI.Controllers
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
+        public IActionResult DownloadData()
+        {
+            var b = System.IO.File.ReadAllBytes("CatalogRo.sqlite3");
+            return new FileContentResult(b, "application/octet-stream");
+            //return Content(System.IO.File.Exists("data.sqlite3").ToString());
+        }
         // GET api/values
         [HttpGet]
         public IEnumerable<string> Get()

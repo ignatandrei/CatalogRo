@@ -31,12 +31,14 @@ namespace CatalogAPI
             services.AddDirectoryBrowser();
             //services.AddOptions();
             services.AddMvc();
-            services.AddScoped<CatalogROContext>();
-                
+            //services.AddScoped<CatalogROContext>();
+            var connection = @"Data Source=CatalogRo.sqlite3;";
+            services.AddDbContext<CatalogROContext>(options => options.UseSqlite(connection));
+
             //services.AddDbContext<CatalogROContext>(options 
             //    => options.UseInMemoryDatabase(databaseName: "Add_writes_to_database")
             //    );
-            Seed(services.BuildServiceProvider().GetRequiredService<CatalogROContext>());
+            //Seed(services.BuildServiceProvider().GetRequiredService<CatalogROContext>());
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "Catalog RO API", Version = "v1" });
