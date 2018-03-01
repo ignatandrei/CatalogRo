@@ -13,6 +13,7 @@ import 'rxjs/Rx'
 export class CategoriesComponent implements OnInit {
 
   lists: CategoryView[];
+  initialList: CategoryView[] = [];
   constructor(private service: CategoryService) { }
   getList(): void {
     
@@ -26,7 +27,14 @@ export class CategoriesComponent implements OnInit {
         }
         )
       })
-      .subscribe(it => this.lists = it);
+      .subscribe(it => {
+        this.lists = it;
+        this.lists.forEach(item => {
+          item.Categories = it;
+          this.initialList.push(item);
+        });
+        
+      });
 
   }
   ngOnInit() {
@@ -57,7 +65,10 @@ export class CategoriesComponent implements OnInit {
     return this.lists.some(it => it.isModified);
   }
   addNew(): void {
-    this.lists.push(new CategoryView(new Category(0, "", 0)));
+    var c = new CategoryView(new Category(0, "", 0));
+    c.Categories = this.initialList;
+    window.alert('a'+c.Categories.length);
+    this.lists.push(c);
   }
   delete(f: CategoryView, op: boolean) {
     f.isDeleted = op;

@@ -17,4 +17,6 @@ export class CategoryView extends Category
   isModified: boolean;
   isNew: boolean;
   isDeleted: boolean;
+
+  Categories:Category[];
 }

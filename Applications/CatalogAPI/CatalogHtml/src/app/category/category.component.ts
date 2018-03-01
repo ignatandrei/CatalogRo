@@ -68,6 +68,8 @@ export class CategoryComponent implements OnInit, DoCheck {
 
     this.isModified =
       (this._itemToDisplay.nume != this._initialValue.nume)
+    ||
+    (this._itemToDisplay.parent != this._initialValue.parent)
       ||
     (this._itemToDisplay.isDeleted != this._initialValue.isDeleted);
   }

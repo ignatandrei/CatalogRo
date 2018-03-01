@@ -1,19 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
 /*@import '~material-design-icons/iconfont/material-icons.css';*/
 @import url('//fonts.googleapis.com/icon?family=Material+Icons');
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
-
-/*@include mat-core();
-
-$primary: mat-palette($mat-lime, 500); $accent: mat-palette($mat-lime, 500, A200, A400); $warn: mat-palette($mat-red, 500); $theme: mat-light-theme($primary, $accent, $warn); @include angular-material-theme($theme); body {
-  font-family: $mat-font-family;
-  font-weight: normal;
+body {
+  font-family: Roboto, Arial, sans-serif;
+  margin: 0;
 }
 
-h1, h2, h3, h4 {
-  font-weight: normal;
-}*/
+.basic-container {
+  padding: 5px;
+}
+
+.version-info {
+  font-size: 8pt;
+  float: right;
+}
+
 [hidden] {
   display: none !important;
 }

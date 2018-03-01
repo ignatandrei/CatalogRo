@@ -1,9 +1,27 @@
 <td>
   <div [ngStyle]="currentStyles">
     {{itemToDisplay.idcategorie}}
+    
   </div>
 </td>
 <td>
   <input [(ngModel)]="itemToDisplay.nume" placeholder="nume" [disabled]="itemToDisplay.isDeleted" [readonly]="itemToDisplay.isDeleted" />
+</td>
+
+<td>
+
+  <mat-form-field>
+    <mat-select [(value)]="itemToDisplay.parent" placeholder="Parent"  [disabled]="itemToDisplay.isDeleted" disableRipple>
+
+      <mat-option *ngFor="let c of itemToDisplay.Categories"
+                  [value]="c.idcategorie"  >
+        {{c.nume}}
+      </mat-option>
+
+    </mat-select>
+  </mat-form-field>
+</td>
+<td>
+  
   <span [hidden]="!isModified">(de salvat)</span>
 </td>
