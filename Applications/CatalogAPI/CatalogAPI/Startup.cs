@@ -32,8 +32,8 @@ namespace CatalogAPI
             //services.AddOptions();
             services.AddMvc();
             //services.AddScoped<CatalogROContext>();
-            var connection = @"Data Source=CatalogRo.sqlite3;";
-            services.AddDbContext<CatalogROContext>(options => options.UseSqlite(connection),ServiceLifetime.Transient);
+            var connection = @"Data Source=CatalogRo.sqlite3;cache=shared";
+            services.AddDbContext<CatalogROContext>(options => options.UseSqlite(connection));
 
             //services.AddDbContext<CatalogROContext>(options 
             //    => options.UseInMemoryDatabase(databaseName: "Add_writes_to_database")

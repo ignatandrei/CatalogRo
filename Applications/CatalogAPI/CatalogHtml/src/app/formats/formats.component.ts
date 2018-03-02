@@ -50,6 +50,7 @@ export class FormatsComponent implements OnInit {
     Observable
       .merge([saved, deleted])
       .switchMap((e) => { return e })
+      .delay(2000)
       .subscribe(() => this.getFormats());
 
       

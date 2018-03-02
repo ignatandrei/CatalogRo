@@ -9,6 +9,7 @@ namespace CatalogAPI.Controllers
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
+        [HttpGet]
         public IActionResult DownloadData()
         {
             var b = System.IO.File.ReadAllBytes("CatalogRo.sqlite3");
@@ -16,11 +17,11 @@ namespace CatalogAPI.Controllers
             //return Content(System.IO.File.Exists("data.sqlite3").ToString());
         }
         // GET api/values
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value31", "value22" };
-        }
+        //[HttpGet]
+        //public IEnumerable<string> Get()
+        //{
+        //    return new string[] { "value31", "value22" };
+        //}
 
         // GET api/values/5
         [HttpGet("{id}")]

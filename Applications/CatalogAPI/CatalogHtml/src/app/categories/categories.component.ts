@@ -56,6 +56,7 @@ export class CategoriesComponent implements OnInit {
     var deleted = this.service.delete(toSave.filter(it => it.isDeleted));
     console.log('save2');
     saved.concat(deleted)
+      .delay(2000)
       .subscribe(() => this.getList());
 
     console.log('save3');

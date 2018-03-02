@@ -12,7 +12,7 @@
     </td>
   </tr>
 </table>
-<mat-toolbar color="secondary">
+<mat-toolbar [hidden]="loading">
   <mat-toolbar-row>
     <a mat-button (click)="addNew()" color="primary">Add new</a>
     <a mat-button (click)="save()" color="primary" [disabled]="!haveChanges()">save</a>
