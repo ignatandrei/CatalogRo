@@ -27,7 +27,7 @@ export class ResursaComponent implements OnInit {
     this.loaded = false;
     this.resursaDictService.getResursa(id, this.resursa.nume)
       .subscribe(all => {
-        all.forEach(it => it.valoaredata = "asdad" + it.valoare);
+        //all.forEach(it => it.valoareData = "asdad" + it.valoare);
         this.resursa.resurse = all;
         
         this.loaded = true;

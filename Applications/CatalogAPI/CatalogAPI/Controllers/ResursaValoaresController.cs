@@ -22,12 +22,17 @@ namespace CatalogAPI.Controllers
             this.Valoare = rv.IdresursaDictNavigation.Valoare;
             this.TableValue = rv.IdresursaDictNavigation.TableValue;
             this.ValoareData = rv.Valoare;
+            this.UniqueId = rv.UniqueId;
+            this.DataIntroducere = rv.Unique.DataIntroducere;
         }
         public long Id { get; set; }
         public string Nume { get; set; }
         public string Valoare { get; set; }
         public string TableValue { get; set; }
         public string ValoareData { get; set; }
+        public Guid UniqueId { get; set; }
+        public DateTime DataIntroducere { get; set; }
+
     }
     [Produces("application/json")]
     [Route("api/ResursaValoares")]
@@ -48,22 +53,28 @@ namespace CatalogAPI.Controllers
                 Nume = rv.IdresursaDictNavigation.Nume,
                 Valoare = rv.IdresursaDictNavigation.Valoare,
                 TableValue = rv.IdresursaDictNavigation.TableValue,
-                ValoareData = rv.Valoare
-            }).ToArrayAsync();
+                ValoareData = rv.Valoare,
+                UniqueId = rv.UniqueId,
+                DataIntroducere = rv.Unique.DataIntroducere
+
+        }).ToArrayAsync();
             return data;
         }
         [HttpGet("all/{id}")]
         public async Task<IActionResult> GetResursaValoare([FromServices]CatalogROContext context, [FromRoute] long id)
         {
             var riAll = await context.ResursaInregistrare.Where(it => it.Identuziast == id).Select(it=>it.UniqueId).ToArrayAsync();
-            var rvAll = context.ResursaValoare.Where(it => riAll.Contains(it.UniqueId))
+            var rvAll = await context.ResursaValoare.Where(it => riAll.Contains(it.UniqueId))
                 .Select(rv => new ResursaValoareFlat()
                 {
                     Id = rv.IdresursaDict,
                     Nume = rv.IdresursaDictNavigation.Nume,
                     Valoare = rv.IdresursaDictNavigation.Valoare,
                     TableValue = rv.IdresursaDictNavigation.TableValue,
-                    ValoareData = rv.Valoare
+                    ValoareData = rv.Valoare,
+                    UniqueId = rv.UniqueId,
+                    DataIntroducere = rv.Unique.DataIntroducere
+
                 })
                 .ToArrayAsync();
             return Ok(rvAll);
