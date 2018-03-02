@@ -1,0 +1,22 @@
+
+<div *ngIf="loaded">
+
+  <table>
+    <tr *ngFor="let r of resursa.resurse;let i = index">
+      <td>
+        {{i+1}}
+      </td>
+      <td>
+        {{r.valoare}}
+      </td>
+      <td>
+        <input [(ngModel)]="r.valoaredata"  placeholder="{{r.valoare}}" />
+      </td>
+    </tr>
+  </table>
+  <mat-toolbar [hidden]="loading">
+    <mat-toolbar-row>      
+      <a mat-button (click)="save()" color="primary" >save</a>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</div>

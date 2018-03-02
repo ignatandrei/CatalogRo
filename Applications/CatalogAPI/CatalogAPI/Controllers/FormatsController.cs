@@ -24,7 +24,9 @@ namespace CatalogAPI.Controllers
         [HttpGet]
         public IEnumerable<Format> GetFormat([FromServices]CatalogROContext context)
         {
-            return context.Format;
+            var list=context.Format.ToList();
+            list.ForEach(it=>it.DestroyObjectsRelationship());
+            return list;
         }
 
         // GET: api/Formats/5
@@ -42,7 +44,7 @@ namespace CatalogAPI.Controllers
             {
                 return NotFound($"cannot found format with id :{id}");
             }
-
+            format.DestroyObjectsRelationship();
             return Ok(format);
         }
 
@@ -75,7 +77,10 @@ namespace CatalogAPI.Controllers
                 
             
             await context.SaveChangesAsync();
-
+            foreach (var f in formats)
+            {
+                f.DestroyObjectsRelationship();
+            }
             return CreatedAtAction("GetFormat", formats);
         }
 

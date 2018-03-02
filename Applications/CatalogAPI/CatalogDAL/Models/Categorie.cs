@@ -8,6 +8,7 @@ namespace CatalogDAL.Models
         public Categorie()
         {
             InverseParentNavigation = new HashSet<Categorie>();
+            Resursa = new HashSet<Resursa>();
         }
 
         public int Idcategorie { get; set; }
@@ -17,5 +18,6 @@ namespace CatalogDAL.Models
 
         public Categorie ParentNavigation { get; set; }
         public ICollection<Categorie> InverseParentNavigation { get; set; }
+        public ICollection<Resursa> Resursa { get; set; }
     }
 }

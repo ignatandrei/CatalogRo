@@ -19,17 +19,13 @@ namespace CatalogAPI.Controllers
         {
             _context = context;
         }
-        private void DestroyObjectsRelationship(Categorie c)
-        {
-            c.InverseParentNavigation = null;
-            c.ParentNavigation = null;
-        }
+        
         // GET: api/Categories
         [HttpGet]
         public IEnumerable<Categorie> GetCategorie()
         {
             var cat = _context.Categorie.ToList();
-            cat.ForEach(it => DestroyObjectsRelationship(it));
+            cat.ForEach(it=>it.DestroyObjectsRelationship());
             return _context.Categorie;
         }
 
@@ -48,7 +44,7 @@ namespace CatalogAPI.Controllers
             {
                 return NotFound();
             }
-            DestroyObjectsRelationship(categorie);
+            categorie.DestroyObjectsRelationship();
             return Ok(categorie);
         }
 
@@ -84,7 +80,7 @@ namespace CatalogAPI.Controllers
 
 
             await context.SaveChangesAsync();
-            categories.ToList().ForEach(DestroyObjectsRelationship);
+            categories.ToList().ForEach(it=>it.DestroyObjectsRelationship());
             return CreatedAtAction("POSTCategorie", categories);
 
         }

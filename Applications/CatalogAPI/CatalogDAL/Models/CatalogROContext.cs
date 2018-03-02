@@ -7,27 +7,16 @@ namespace CatalogDAL.Models
     public partial class CatalogROContext : DbContext
     {
         public virtual DbSet<Categorie> Categorie { get; set; }
+        public virtual DbSet<Entuziast> Entuziast { get; set; }
         public virtual DbSet<Format> Format { get; set; }
         public virtual DbSet<Resursa> Resursa { get; set; }
-        public CatalogROContext(DbContextOptions<CatalogROContext> options)
-    : base(options)
-        { }
-        public CatalogROContext() : base()
-        {
+        public virtual DbSet<ResursaDict> ResursaDict { get; set; }
+        public virtual DbSet<ResursaInregistrare> ResursaInregistrare { get; set; }
+        public virtual DbSet<ResursaValoare> ResursaValoare { get; set; }
 
-        }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                //optionsBuilder.UseSqlServer(@"Server=.;Database=CatalogRO;Trusted_Connection=True;");
-                //optionsBuilder.UseInMemoryDatabase(databaseName: "Add_writes_to_database");
-                var connection = @"Data Source=CatalogRO.sqlite3;";
-                
-                optionsBuilder.UseSqlite(connection);
-            }
-        }
+        // Unable to generate entity type for table 'dbo.ResursaAlternativa'. Please see the warning messages.
+
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -47,6 +36,23 @@ namespace CatalogDAL.Models
                     .WithMany(p => p.InverseParentNavigation)
                     .HasForeignKey(d => d.Parent)
                     .HasConstraintName("FK_Categorie_Categorie");
+            });
+
+            modelBuilder.Entity<Entuziast>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Email).HasMaxLength(500);
+
+                entity.Property(e => e.Note).HasMaxLength(500);
+
+                entity.Property(e => e.Nume).HasMaxLength(500);
+
+                entity.Property(e => e.Parola).IsRequired();
+
+                entity.Property(e => e.Prenume).HasMaxLength(500);
+
+                entity.Property(e => e.Telefon).HasMaxLength(500);
             });
 
             modelBuilder.Entity<Format>(entity =>
@@ -85,6 +91,86 @@ namespace CatalogDAL.Models
                 entity.Property(e => e.Url2Resursa).HasMaxLength(500);
 
                 entity.Property(e => e.UrlResursa).HasMaxLength(500);
+
+                entity.HasOne(d => d.CategorieNavigation)
+                    .WithMany(p => p.Resursa)
+                    .HasForeignKey(d => d.Categorie)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Resursa_Categorie");
+
+                entity.HasOne(d => d.FormatNavigation)
+                    .WithMany(p => p.Resursa)
+                    .HasForeignKey(d => d.Format)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Resursa_Format");
+
+                entity.HasOne(d => d.Unique)
+                    .WithMany(p => p.Resursa)
+                    .HasForeignKey(d => d.UniqueId)
+                    .HasConstraintName("FK_Resursa_ResursaInregistrare");
+            });
+
+            modelBuilder.Entity<ResursaDict>(entity =>
+            {
+                entity.Property(e => e.Id)
+                    .HasColumnName("ID")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.Nume)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.TableValue).HasMaxLength(50);
+
+                entity.Property(e => e.Valoare)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<ResursaInregistrare>(entity =>
+            {
+                entity.HasKey(e => e.UniqueId);
+
+                entity.Property(e => e.UniqueId)
+                    .HasColumnName("UniqueID")
+                    .HasDefaultValueSql("(newid())");
+
+                entity.Property(e => e.DataIntroducere)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.Identuziast).HasColumnName("IDEntuziast");
+
+                entity.HasOne(d => d.IdentuziastNavigation)
+                    .WithMany(p => p.ResursaInregistrare)
+                    .HasForeignKey(d => d.Identuziast)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ResursaInregistrare_Entuziast");
+            });
+
+            modelBuilder.Entity<ResursaValoare>(entity =>
+            {
+                entity.HasKey(e => new { e.IdresursaDict, e.UniqueId });
+
+                entity.Property(e => e.IdresursaDict).HasColumnName("IDResursaDict");
+
+                entity.Property(e => e.UniqueId)
+                    .HasColumnName("UniqueID")
+                    .HasDefaultValueSql("(newid())");
+
+                entity.Property(e => e.Valoare).HasColumnType("nchar(10)");
+
+                entity.HasOne(d => d.IdresursaDictNavigation)
+                    .WithMany(p => p.ResursaValoare)
+                    .HasForeignKey(d => d.IdresursaDict)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ResursaValoare_ResursaDict");
+
+                entity.HasOne(d => d.Unique)
+                    .WithMany(p => p.ResursaValoare)
+                    .HasForeignKey(d => d.UniqueId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ResursaValoare_ResursaInregistrare");
             });
         }
     }

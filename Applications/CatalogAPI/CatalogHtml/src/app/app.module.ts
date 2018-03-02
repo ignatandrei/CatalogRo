@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { FormatsComponent } from './formats/formats.component';
 import { FormatComponent } from './format/format.component';
 import { FormatService } from './format.service';
+import { ResursaDictsService } from './resursa.service';
 import { CategoryComponent } from './category/category.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { CategoryService } from './category.service';
@@ -53,6 +54,9 @@ import {
 } from '@angular/material';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { AdminComponent } from './admin/admin.component';
+import { AdddataComponent } from './adddata/adddata.component';
+import { ResursaComponent } from './resursa/resursa.component';
+import { ResurseComponent } from './resurse/resurse.component';
 
 
 @NgModule({
@@ -63,7 +67,10 @@ import { AdminComponent } from './admin/admin.component';
     CategoryComponent,
     CategoriesComponent,
     BreadcrumbsComponent,
-    AdminComponent
+    AdminComponent,
+    AdddataComponent,
+    ResursaComponent,    
+    ResurseComponent
   ],
   imports: [
     BrowserModule,
@@ -108,6 +115,7 @@ import { AdminComponent } from './admin/admin.component';
     FormatService,
     CategoryService,
     AppRoutingModule,
+    ResursaDictsService,
     { provide: HTTP_INTERCEPTORS, useClass: NoCacheInterceptor, multi: true }
 
   ],
