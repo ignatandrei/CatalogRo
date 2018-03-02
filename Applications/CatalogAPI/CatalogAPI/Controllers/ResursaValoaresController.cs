@@ -38,7 +38,7 @@ namespace CatalogAPI.Controllers
 
 
         // GET: api/ResursaValoares
-        [HttpGet]
+        [HttpGet("{id}")]
         public async Task<IEnumerable<ResursaValoareFlat>> GetResursaValoare([FromServices]CatalogROContext context, Guid id)
         {
             var data = await context.ResursaValoare.Where(rv=>rv.UniqueId==id)
@@ -51,6 +51,22 @@ namespace CatalogAPI.Controllers
                 ValoareData = rv.Valoare
             }).ToArrayAsync();
             return data;
+        }
+        [HttpGet("all/{id}")]
+        public async Task<IActionResult> GetResursaValoare([FromServices]CatalogROContext context, [FromRoute] long id)
+        {
+            var riAll = await context.ResursaInregistrare.Where(it => it.Identuziast == id).Select(it=>it.UniqueId).ToArrayAsync();
+            var rvAll = context.ResursaValoare.Where(it => riAll.Contains(it.UniqueId))
+                .Select(rv => new ResursaValoareFlat()
+                {
+                    Id = rv.IdresursaDict,
+                    Nume = rv.IdresursaDictNavigation.Nume,
+                    Valoare = rv.IdresursaDictNavigation.Valoare,
+                    TableValue = rv.IdresursaDictNavigation.TableValue,
+                    ValoareData = rv.Valoare
+                })
+                .ToArrayAsync();
+            return Ok(rvAll);
         }
         // GET: api/ResursaValoares/5
         //[HttpGet("{id}")]

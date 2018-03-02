@@ -51,6 +51,12 @@ export class ResursaDictsService {
     const url = this.linkUrlSave + '/' + resursa.nume;
     return this.http.post<number>(url,resursa.resurse);
   }
+  getResursaForUser(idUser: number): Observable<ResursaDicts[]> {
+    const url = this.linkUrlSave + '/all/' + idUser;
+    console.log(url);
+    return this.http.get<ResursaDicts[]>(url);
+
+  }
   getResursa(id: number|string, nume: string): Observable<ResursaDicts[]> {
     if (id == 0) {
       return this.getList(nume);

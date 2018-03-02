@@ -1,3 +1,21 @@
 <p>
-  resurse works!
+  
 </p>
+
+<div *ngIf="loaded">
+  resurse Salvate {{resurse.length}}
+</div>
+<table>
+  <tr *ngFor="let r of resurse;let i = index">
+    <td>
+      {{i+1}}
+    </td>
+    
+    <td>
+      {{r.valoare}}
+    </td>
+    <td>
+      {{r.valoaredata}}
+    </td>
+  </tr>
+</table>

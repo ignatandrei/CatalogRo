@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Resursa } from '../resursa'
+import { ResursaDicts } from '../ResursaDicts'
+import { ResursaDictsService } from '../resursa.service'
 
 @Component({
   selector: 'app-resurse',
@@ -7,9 +10,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ResurseComponent implements OnInit {
 
-  constructor() { }
+  constructor(private resursaDictService: ResursaDictsService) { }
+  resurse: ResursaDicts[]=[];
 
   ngOnInit() {
+    this.getResurseForUser();
+  }
+  loaded: boolean = false;
+  getResurseForUser(): void {
+    const idUser = 1;
+    this.loaded = false;
+    this.resursaDictService.getResursaForUser(idUser)
+      .subscribe(all => {        
+        this.resurse= all;
+        this.loaded = true;
+      });
   }
 
 }
