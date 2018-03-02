@@ -27,10 +27,14 @@ export class BreadcrumbsComponent implements OnInit {
   buildBreadCrumb(route: ActivatedRoute, url: string = '',
     breadcrumbs: Array<BreadCrumb> = []): Array<BreadCrumb> {
     // If no routeConfig is avalailable we are on the root path
-    const label = route.routeConfig ? route.routeConfig.data['breadcrumb'] : 'Home';
     const path = route.routeConfig ? route.routeConfig.path : '';
+
+    const label = route.routeConfig ? route.routeConfig.data['breadcrumb'] : 'Home';
+
+    
     // In the routeConfig the complete path is not available,
     // so we rebuild it each time
+    
     const nextUrl = `${url}${path}/`;
     const breadcrumb = {
       label: label,
@@ -38,6 +42,10 @@ export class BreadcrumbsComponent implements OnInit {
       params:''
     };
     const newBreadcrumbs = [...breadcrumbs, breadcrumb];
+
+    if (path == '' && label == '')
+      newBreadcrumbs.length = newBreadcrumbs.length - 1;
+
     if (route.firstChild) {
       // If we are not on our current path yet,
       // there will be more children to look after, to build our breadcumb

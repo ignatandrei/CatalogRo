@@ -18,35 +18,43 @@ const routes: Routes = [
   {
     path: 'adddata',
     data: {
-      breadcrumb: 'Add Data'
+      breadcrumb: 'Sumar date user'
     },
-    
+
     children: [
       {
         path: '',
         component: AdddataComponent,
         data: {
-          breadcrumb: 'Adauga Date'
+          breadcrumb: ''
         }
-      }, 
-        {
-          path: 'resurse',
+      },
+      {
+        path: 'resurse',
+        data: {
+          breadcrumb: 'Lista resurse'
+        },
+        children: [{
+          path: '',
           component: ResurseComponent,
           data: {
-            breadcrumb: 'Lista resurse'
+            breadcrumb: ''
           }
-      },
+        },
         {
-          path: 'resurse/:id', component: ResursaComponent,
+          path: ':id', component: ResursaComponent,
           data: {
             breadcrumb: 'Add/Edit'
-          }},
-      ]
+          }
+        }],
+      },
+
+    ]
   },
   {
 
     path: 'admin',
-    
+
     data: {
       breadcrumb: 'admin'
     },
@@ -55,7 +63,7 @@ const routes: Routes = [
         path: '',
         component: AdminComponent,
         data: {
-          breadcrumb: 'Links'
+          breadcrumb: ''
         }
       },
       {
@@ -68,7 +76,8 @@ const routes: Routes = [
       {
         path: 'categories', component: CategoriesComponent, data: {
           breadcrumb: 'categories'
-        },}
+        },
+      }
     ]
   }
 ];

@@ -1,34 +1,31 @@
-<p>
 
-</p>
-
+<a mat-button routerLink="/adddata/resurse/0" color="primary">Adauga</a>
 <div *ngIf="loaded">
-  resurse
+  <table>
+    <tr *ngFor="let k of groupedResurses.keys();let i = index">
+      <td>
+        {{i+1}}
+      </td>
+      <td>
+        <mat-card>
+          <mat-card-title>
+            Introdus la data {{k  | date:'dd MMMM yyyy HH:mm'}}
+          </mat-card-title>
+          <mat-card-content>
+            <table>
+              <tr *ngFor="let dict of groupedResurses.get(k);let j = index">
+                <td>
+                  {{j+1}}
+                </td>
+                <td>{{dict.valoare}}</td>
+                <td>{{dict.valoareData}}</td>
+              </tr>
+
+            </table>
+          </mat-card-content>
+
+        </mat-card>
+      </td>
+    </tr>
+  </table>
 </div>
-<table>
-  <tr *ngFor="let k of groupedResurses.keys();let i = index">
-    <td>
-      {{i+1}}
-    </td>
-    <td>
-      <mat-card>
-        <mat-card-title>
-          Introdus la data {{k}}
-        </mat-card-title>
-        <mat-card-content>
-          <table>
-            <tr *ngFor="let dict of groupedResurses.get(k);let j = index">
-              <td>
-                {{j+1}}
-              </td>
-              <td>{{dict.valoare}}</td>
-              <td>{{dict.valoareData}}</td>
-            </tr>
-
-          </table>
-        </mat-card-content>
-
-      </mat-card>
-    </td>
-  </tr>
-</table>

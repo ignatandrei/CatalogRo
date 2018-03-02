@@ -17,7 +17,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 export class ResurseComponent implements OnInit {
 
   constructor(private resursaDictService: ResursaDictsService) { }
-  resurse: ResursaDicts[]=[];
+  resurse: ResursaDicts[];
   groupedResurses: Map<Date, ResursaDicts[]>;
   
   ngOnInit() {
@@ -33,7 +33,16 @@ export class ResurseComponent implements OnInit {
       .subscribe(all => {        
         this.resurse = all;
         //TODO:make unique
-        const t = Observable.from(all).groupBy(
+        const t = Observable.from(
+          all.sort((x, y) => {
+            if (y.dataIntroducere > x.dataIntroducere)
+              return 1;
+            if (y.dataIntroducere === x.dataIntroducere)
+              return 0;
+            return -1;
+            }
+            ))
+          .groupBy(
           it => it.dataIntroducere
         ).subscribe(it => {
           let arr: ResursaDicts[]= new Array<ResursaDicts>();
@@ -41,11 +50,6 @@ export class ResurseComponent implements OnInit {
           it.subscribe(r => arr.push(r));
           this.loaded = true;
           });
-
-       //all.map(it => it.uniqueId);
-          
-        
-        
       });
     
   }
